@@ -56,7 +56,44 @@ class GameBoard:
         self.board[row][col] = Cell.EMPTY
 
 def minimax(game_board: GameBoard, player: Player, alpha: float, beta: float) -> tuple[float, tuple[int, int] | None]:
-    pass
+    if game_board.win(Player.PLAYER):
+        return Config.WIN_REWARD, None
+    if game_board.win(Player.OPPONENT):
+        return -Config.WIN_REWARD, None
+    if game_board.draw():
+        return Config.DRAW_REWARD, None
+
+    moves = game_board.possible_moves()
+    best_move = None
+
+    if player == Player.PLAYER:
+        max_eval = -float("inf")
+        for move in moves:
+            game_board.make_move(move[0], move[1], player)
+            eval_score, _ = minimax(game_board, player.opponent(), alpha, beta)
+            game_board.set_empty(move[0], move[1])
+            
+            if eval_score > max_eval:
+                max_eval = eval_score
+                best_move = move
+            alpha = max(alpha, eval_score)
+            if beta <= alpha:
+                break
+        return max_eval, best_move
+    else:
+        min_eval = float("inf")
+        for move in moves:
+            game_board.make_move(move[0], move[1], player)
+            eval_score, _ = minimax(game_board, player.opponent(), alpha, beta)
+            game_board.set_empty(move[0], move[1])
+            
+            if eval_score < min_eval:
+                min_eval = eval_score
+                best_move = move
+            beta = min(beta, eval_score)
+            if beta <= alpha:
+                break
+        return min_eval, best_move
 
 def game_loop() -> None:
     game_board: GameBoard = GameBoard()
@@ -67,13 +104,14 @@ def game_loop() -> None:
             opponent_row, opponent_col = [int(i) for i in line]
             valid_action_count = int(input())
             for _ in range(valid_action_count):
-                input()
+                input() # Wczytaj linie poprawnych ruchow
         except EOFError:
             break
 
         if opponent_row != -1:
             game_board.make_move(opponent_row, opponent_col, Player.OPPONENT)
 
+        # Obliczenia Minimax
         _, move = minimax(game_board, Player.PLAYER, -float("inf"), float("inf"))
         
         if move:
@@ -81,7 +119,7 @@ def game_loop() -> None:
             game_board.make_move(row, col, Player.PLAYER)
             print(f"{row} {col}")
         else:
-            print("0 0")
+            print("0 0") # Ruch awaryjny, jesli nie znaleziono innego (koniec gry)
 
 if __name__ == "__main__":
     game_loop()
