@@ -1,4 +1,9 @@
-# Dokumentacja Końcowa - AI do Kółka i Krzyżyka
+# Raport Projektowy: Algorytmy Przeszukiwania (Minimax)
+
+**Autor:** Dominik Łakomy  
+**Nr albumu:** 29163  
+**Przedmiot:**  Sztuczna Inteligencja (Laboratoria)  
+**Technologia:** Python 3.9+ (Standard Library)
 
 Zrealizowano implementację sztucznej inteligencji dla dwóch wariantów gry:
 1.  **Kółko i Krzyżyk (Standard)**: Algorytm Minimax (gra perfekcyjna).
@@ -16,17 +21,68 @@ Zrealizowano implementację sztucznej inteligencji dla dwóch wariantów gry:
     - Nagradza za zdobyte małe plansze (duże punkty).
     - Premiuje zajęcie środka i rogów (strategia).
     - Ocenia pozycję na jeszcze nieukończonych małych planszach.
-- Zmodyfikowano `minimax` do pracy z limitem głębokości (domyślnie 2 ruchy w przód).
+- Zmodyfikowano `minimax` do pracy z **pogłębianiem iteracyjnym** (bot stara się obliczyć jak najwięcej ruchów w przód w dostępnym czasie).
 - Bot potrafi grać w czasie rzeczywistym na platformie Codingame.
 - **Wynik weryfikacji:** Bot zakwalifikował się do **Złotej Ligi (Gold League)** (awans potwierdzony w systemie).
 
+## Strategia i Algorytmika
+
+### 1. Strategia Wagowa (Heurystyka)
+Bot preferuje pola strategiczne (środek i rogi). Wagi przypisane do pól na dużej planszy:
+
+| 1.2 (Róg) | 1.0       | 1.2 (Róg) |
+|-----------|-----------|-----------|
+| **1.0** | **2.0 (Środek)** | **1.0** |
+| **1.2 (Róg)** | **1.0** | **1.2 (Róg)** |
+
+### 2. Optymalizacja Czasowa (Real-Time)
+Bot działa w rygorystycznym reżimie czasu rzeczywistego (wymóg Codingame: < 100ms na ruch). 
+Zaimplementowano mechanizm **Iterative Deepening** (Pogłębianie Iteracyjne), który:
+- Rozpoczyna szukanie od głębokości 1.
+- Zwiększa głębokość w każdej iteracji (aż do limitu 10).
+- Przerywa przeszukiwanie drzewa Minimax, gdy czas wykonania zbliża się do limitu (95ms), zwracając najlepszy dotychczas znaleziony wynik.
+
+### 3. Schemat Punktacji (Heurystyka)
+W funkcji `score` w `ultimate_tic_tac_toe.py` zaimplementowano zaawansowaną logikę oceny:
+- **Globalna Wygrana**: +/- 10000 pkt
+- **Zdobycie Małej Planszy**: +/- 100 pkt * waga planszy
+- **"Prawie Wygrana" (2 znaki w linii)**: +/- 5 pkt * waga planszy (kluczowe dla Ligi Złotej)
+- **Kontrola Środka**: +/- 2 pkt * waga planszy
+
+## Struktura Projektu
+
+- **`tic_tac_toe.py`** – Implementacja dla klasycznej planszy 3x3 (rozwiązanie kompletne, zawsze remisuje lub wygrywa).
+- **`ultimate_tic_tac_toe.py`** – Implementacja dla wariantu Ultimate (9 plansz 3x3) z limitem głębokości (depth=10) i zaawansowaną heurystyką oceny pozycji.
+
+## Wymagania Techniczne
+
+- **Python 3.9+** (projekt wykorzystuje `dataclasses` oraz `type hinting` dla list `list[list[CellState]]`).
+- **Standard Library Only**: Projekt nie wymaga żadnych zewnętrznych bibliotek (czysty Python).
+
 ## Zrzuty Ekranu: Postęp w Ligach
 
-![Liga Drewniana (Wood)](welna.png)
-![Liga Brązowa (Bronze)](braz.png)
-![Liga Srebrna (Silver)](srebro.png)
-![Liga Złota (Gold)](zloto.png)
-![Ranking w Złotej Lidze](zloto1.png)
+## Zrzuty Ekranu: Postęp w Ligach
+<br>
+
+![Liga Drewniana](welna.png)
+*Rys 1. Początek w Lidze Drewnianej (Wood League)*
+<br>
+
+![Liga Brązowa](braz.png)
+*Rys 2. Awans do Ligi Brązowej (Bronze League)*
+<br>
+
+![Liga Srebrna](srebro.png)
+*Rys 3. Walka w Lidze Srebrnej (Silver League)*
+<br>
+
+![Liga Złota](zloto.png)
+*Rys 4. Wejście do Ligi Złotej (Gold League)*
+<br>
+
+![Ranking](zloto1.png)
+*Rys 5. Potwierdzenie pozycji w rankingu Złotej Ligi*
+<br>
 
 ## Jak Uruchomić (Testowanie)
 
