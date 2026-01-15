@@ -18,7 +18,7 @@ Zrealizowano implementacje sztucznej inteligencji dla dwoch wariantow gry:
     - Ocenia pozycje na jeszcze nieukonczonych malych planszach.
 - Zmodyfikowano `minimax` do pracy z limitem glebokosci (domyslnie 2 ruchy w przod).
 - Bot potrafi grac w czasie rzeczywistym na platformie Codingame.
-- **Wynik weryfikacji:** Bot osiagnal **Srebrna Lige (Silver League)**, zajmujac czolowe miejsca w rankingu.
+- **Wynik weryfikacji:** Bot zakwalifikowal sie do **Zlotej Ligi (Gold League)** (awans potwierdzony w systemie).
 
 ## Jak Uruchomic (Testowanie)
 
