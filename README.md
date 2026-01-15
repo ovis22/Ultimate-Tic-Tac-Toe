@@ -20,6 +20,13 @@ Zrealizowano implementacje sztucznej inteligencji dla dwoch wariantow gry:
 - Bot potrafi grac w czasie rzeczywistym na platformie Codingame.
 - **Wynik weryfikacji:** Bot zakwalifikowal sie do **Zlotej Ligi (Gold League)** (awans potwierdzony w systemie).
 
+## Zrzuty Ekranu: Postep w Ligach
+
+![Liga Drewniana (Wood)](welna.png)
+![Liga Brazowa (Bronze)](braz.png)
+![Liga Srebrna (Silver)](srebro.png)
+![Liga Zlota (Gold)](zloto.png)
+
 ## Jak Uruchomic (Testowanie)
 
 ### Na platformie Codingame
