@@ -111,10 +111,98 @@ class UltimateBoard:
         self.board[board_row][board_col].set_empty(small_board_row, small_board_col)
 
 def score(game_board: UltimateBoard) -> float:
-    return 0.0
+    # Sprawdz globalna wygrana
+    if game_board.win(Player.PLAYER):
+        return Config.WIN_REWARD * 1000
+    if game_board.win(Player.OPPONENT):
+        return -Config.WIN_REWARD * 1000
+    
+    total_score = 0.0
+    
+    # Ocen kazda mala plansze
+    for r in range(Config.BOARD_SIZE):
+        for c in range(Config.BOARD_SIZE):
+            small_board = game_board.board[r][c]
+            board_score = 0.0
+            
+            if small_board.win(Player.PLAYER):
+                board_score = 10.0
+            elif small_board.win(Player.OPPONENT):
+                board_score = -10.0
+            else:
+                # Heurystyka dla niedokonczonej malej planszy
+                # Zachecaj do zajmowania srodka
+                if small_board.board[1][1] == Player.PLAYER:
+                    board_score += 0.5
+                elif small_board.board[1][1] == Player.OPPONENT:
+                    board_score -= 0.5
+            
+            # Wagi dla malych plansz (Srodek jest najwazniejszy, potem rogi)
+            weight = 1.0
+            if r == 1 and c == 1:
+                weight = 2.0
+            elif (r + c) % 2 == 0: # Rogi
+                weight = 1.2
+            
+            total_score += board_score * weight
+
+    return total_score
 
 def minimax(game_board: UltimateBoard, player: Player, alpha: float, beta: float, depth: int) -> tuple[float, tuple[int, int] | None]:
-    pass
+    if depth == 0 or game_board.win(Player.PLAYER) or game_board.win(Player.OPPONENT) or game_board.draw():
+        return score(game_board), None
+
+    moves = game_board.possible_moves()
+    # Sortuj ruchy wedlug prostej heurystyki, aby poprawic odcinanie? 
+    # Na razie prosta iteracja.
+    
+    best_move = None
+    
+    if player == Player.PLAYER:
+        max_eval = -float("inf")
+        for move in moves:
+            # Sklonowac plansze czy cofnac ruch? 
+            # Poniewaz make_move modyfikuje stan, MUSIMY go cofnac.
+            # Musimy sledzic poprzedni stan 'next_board', aby cofnac poprawnie.
+            
+            # Zapisywanie stanu
+            prev_next_board = game_board.next_board
+            row, col = move
+            # make_move modyfikuje komorke i aktualizuje next_board
+            game_board.make_move(row, col, player)
+            
+            eval_score, _ = minimax(game_board, player.opponent(), alpha, beta, depth - 1)
+            
+            # Cofanie stanu
+            game_board.set_empty(row, col)
+            game_board.next_board = prev_next_board
+            
+            if eval_score > max_eval:
+                max_eval = eval_score
+                best_move = move
+            alpha = max(alpha, eval_score)
+            if beta <= alpha:
+                break
+        return max_eval, best_move
+    else:
+        min_eval = float("inf")
+        for move in moves:
+            prev_next_board = game_board.next_board
+            row, col = move
+            game_board.make_move(row, col, player)
+            
+            eval_score, _ = minimax(game_board, player.opponent(), alpha, beta, depth - 1)
+            
+            game_board.set_empty(row, col)
+            game_board.next_board = prev_next_board
+            
+            if eval_score < min_eval:
+                min_eval = eval_score
+                best_move = move
+            beta = min(beta, eval_score)
+            if beta <= alpha:
+                break
+        return min_eval, best_move
 
 def game_loop() -> None:
     game_board: UltimateBoard = UltimateBoard()
