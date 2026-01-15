@@ -1,46 +1,46 @@
-# Dokumentacja Koncowa - AI do Kolka i Krzyzyka
+# Dokumentacja Końcowa - AI do Kółka i Krzyżyka
 
-Zrealizowano implementacje sztucznej inteligencji dla dwoch wariantow gry:
-1.  **Kolko i Krzyzyk (Standard)**: Algorytm Minimax (gra perfekcyjna).
-2.  **Ultimate Kolko i Krzyzyk**: Algorytm Minimax z ograniczeniem glebokosci i funkcja heurystyczna (heurystyka oceny stanu planszy).
+Zrealizowano implementację sztucznej inteligencji dla dwóch wariantów gry:
+1.  **Kółko i Krzyżyk (Standard)**: Algorytm Minimax (gra perfekcyjna).
+2.  **Ultimate Kółko i Krzyżyk**: Algorytm Minimax z ograniczeniem głębokości i funkcją heurystyczną (heurystyka oceny stanu planszy).
 
 ## Zrealizowane Zadania
 
-### 1. Kolko i Krzyzyk (`tic_tac_toe.py`)
-- Zaimplementowano funkcje `minimax`, ktora rekurencyjnie przeszukuje cale drzewo gry.
+### 1. Kółko i Krzyżyk (`tic_tac_toe.py`)
+- Zaimplementowano funkcję `minimax`, która rekurencyjnie przeszukuje całe drzewo gry.
 - Dodano odcinanie Alpha-Beta dla optymalizacji.
 - Bot gra perfekcyjnie (zawsze remisuje lub wygrywa).
 
 ### 2. Ultimate Tic-Tac-Toe (`ultimate_tic_tac_toe.py`)
-- Zaimplementowano funkcje `score` (heurystyke), ktora ocenia szanse gracza:
-    - Nagradza za zdobyte male plansze (duze punkty).
-    - Premiuje zajecie srodka i rogow (strategia).
-    - Ocenia pozycje na jeszcze nieukonczonych malych planszach.
-- Zmodyfikowano `minimax` do pracy z limitem glebokosci (domyslnie 2 ruchy w przod).
-- Bot potrafi grac w czasie rzeczywistym na platformie Codingame.
-- **Wynik weryfikacji:** Bot zakwalifikowal sie do **Zlotej Ligi (Gold League)** (awans potwierdzony w systemie).
+- Zaimplementowano funkcję `score` (heurystykę), która ocenia szanse gracza:
+    - Nagradza za zdobyte małe plansze (duże punkty).
+    - Premiuje zajęcie środka i rogów (strategia).
+    - Ocenia pozycję na jeszcze nieukończonych małych planszach.
+- Zmodyfikowano `minimax` do pracy z limitem głębokości (domyślnie 2 ruchy w przód).
+- Bot potrafi grać w czasie rzeczywistym na platformie Codingame.
+- **Wynik weryfikacji:** Bot zakwalifikował się do **Złotej Ligi (Gold League)** (awans potwierdzony w systemie).
 
-## Zrzuty Ekranu: Postep w Ligach
+## Zrzuty Ekranu: Postęp w Ligach
 
 ![Liga Drewniana (Wood)](welna.png)
-![Liga Brazowa (Bronze)](braz.png)
+![Liga Brązowa (Bronze)](braz.png)
 ![Liga Srebrna (Silver)](srebro.png)
-![Liga Zlota (Gold)](zloto.png)
-![Ranking w Zlotej Lidze](zloto1.png)
+![Liga Złota (Gold)](zloto.png)
+![Ranking w Złotej Lidze](zloto1.png)
 
-## Jak Uruchomic (Testowanie)
+## Jak Uruchomić (Testowanie)
 
 ### Na platformie Codingame
-1.  Skopiuj kod z pliku `tic_tac_toe.py` (dla malej gry) lub `ultimate_tic_tac_toe.py` (dla duzej gry).
-2.  Wejdz na odpowiednie wyzwanie na codingame.com.
+1.  Skopiuj kod z pliku `tic_tac_toe.py` (dla małej gry) lub `ultimate_tic_tac_toe.py` (dla dużej gry).
+2.  Wejdź na odpowiednie wyzwanie na codingame.com.
 3.  Wklej kod do edytora.
-4.  Kliknij **TEST IN ARENA**, aby wyslac bota do ligi i zdobyc punkty.
+4.  Kliknij **TEST IN ARENA**, aby wysłać bota do ligi i zdobyć punkty.
 
 ### Lokalnie (Symulacja)
-Mozesz uruchomic gre w terminalu, wpisujac ruchy przeciwnika recznie:
+Możesz uruchomić grę w terminalu, wpisując ruchy przeciwnika ręcznie:
 ```bash
 python tic_tac_toe.py
 ```
-Format wejscia (zgodny z Codingame):
-1.  Wspolrzedne ruchu przeciwnika (np. `0 0`). Jesli pierwszy ruch, wpisz `-1 -1`.
-2.  Liczba poprawnych akcji (wpisz np. `0` lub dowolna liczbe, bot to ignoruje w tej implementacji).
+Format wejścia (zgodny z Codingame):
+1.  Współrzędne ruchu przeciwnika (np. `0 0`). Jeśli pierwszy ruch, wpisz `-1 -1`.
+2.  Liczba poprawnych akcji (wpisz np. `0` lub dowolną liczbę, bot to ignoruje w tej implementacji).
