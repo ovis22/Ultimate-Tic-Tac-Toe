@@ -26,6 +26,7 @@ Zrealizowano implementacje sztucznej inteligencji dla dwoch wariantow gry:
 ![Liga Brazowa (Bronze)](braz.png)
 ![Liga Srebrna (Silver)](srebro.png)
 ![Liga Zlota (Gold)](zloto.png)
+![Ranking w Zlotej Lidze](zloto1.png)
 
 ## Jak Uruchomic (Testowanie)
 
